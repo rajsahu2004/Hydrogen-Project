@@ -1,6 +1,7 @@
 from googleMapDownloader import GoogleMapDownloader
+import os
 
-def main(lat,lon,zoom=20,img_name='high_resolution_image.png'):
+def main(lat,lon,zoom=20,img_name='high_resolution_image.png',dir='images'):
     # Create a new instance of GoogleMap Downloader
     gmd = GoogleMapDownloader(lat, lon, zoom)
 
@@ -13,7 +14,8 @@ def main(lat,lon,zoom=20,img_name='high_resolution_image.png'):
         print("Could not generate the image - try adjusting the zoom level and checking your coordinates")
     else:
         #Save the image to disk
-        img.save(img_name)
+        os.makedirs(dir, exist_ok=True)
+        img.save(f'{dir}/{img_name}')
         print("The map has successfully been created")
 
 
