@@ -1,6 +1,3 @@
-# A script which when given a longitude, latitude and zoom level downloads a
-# high resolution google map
-
 import urllib
 import urllib.request
 from PIL import Image
@@ -84,6 +81,7 @@ class GoogleMapDownloader:
 
         for x in range(0, tile_width):
             for y in range(0, tile_height) :
+                # url = 'https://mt0.google.com/vt/lyrs=s&?x=' + str(start_x + x) + '&y=' + str(start_y + y) + '&z=' + str( self._zoom)
                 url = 'https://mt0.google.com/vt/lyrs=s&?x=' + str(start_x + x) + '&y=' + str(start_y + y) + '&z=' + str( self._zoom)
 
                 current_tile = str(x)+'-'+str(y)
@@ -96,3 +94,13 @@ class GoogleMapDownloader:
 
         return map_img
 
+def dms_to_decimal(angle_str):
+    parts = angle_str.split('°')
+    angle = float(parts[0])
+    if len(parts) > 1:
+        parts = parts[1].split("'")
+        angle += float(parts[0])/60
+        if len(parts) > 1 and parts[1] != '':
+            parts = parts[1].split('"')
+            angle += float(parts[0])/3600
+    return angle
